@@ -8,16 +8,12 @@ const TTL = 1000 * 60 * 10;
 
 const hits = new Map<string, number[]>();
 
-export function rateLimit(key: string, limit = 60, windowMs = 60_000) {
-  const now = Date.now();
-  const list = (hits.get(key) ?? []).filter((t) => now - t < windowMs);
-  list.push(now);
-  hits.set(key, list);
-  if (list.length > limit) throw new Error("Too many requests. Please slow down.");
-}
-
 export async function tmdb<T>(path: string, params: Params = {}): Promise<T> {
-  const key = process.env["TMDB_API_KEY"];
+  const key =
+    process.env["TMDB_API_KEY"] ||
+    (typeof process !== "undefined" && process.env?.["VITE_TMDB_API_KEY"]) ||
+    "ef311eb0b9b07b9c73e9fb0a732cc150";
+
   if (!key) throw new Error("TMDB is not configured on the server.");
 
   const url = new URL(BASE + path);

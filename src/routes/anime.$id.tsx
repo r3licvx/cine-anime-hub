@@ -3,9 +3,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AnimeDetail } from "@/components/anime/detail";
 
 export const Route = createFileRoute("/anime/$id")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    play: search["play"] === true || search["play"] === "true" ? true : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): { play?: boolean } =>
+    search["play"] === true || search["play"] === "true" ? { play: true } : {},
   head: () => ({
     meta: [
       { title: "Anime Details — AniStream" },

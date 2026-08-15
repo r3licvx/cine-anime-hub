@@ -159,14 +159,14 @@ export async function details(id: number) {
     append_to_response: "aggregate_credits,recommendations,similar,content_ratings",
   });
 
-  const cast: Person[] = (d.aggregate_credits?.cast ?? []).slice(0, 24).map((c: any) => ({
+  const cast: Person[] = ((d.aggregate_credits?.cast ?? []) as any[]).slice(0, 24).map((c: any) => ({
     id: c.id,
     name: c.name,
     character: c.roles?.[0]?.character ?? "",
     profile: c.profile_path ?? null,
   }));
 
-  const crew: Person[] = (d.aggregate_credits?.crew ?? []).slice(0, 24).map((c: any) => ({
+  const crew: Person[] = ((d.aggregate_credits?.crew ?? []) as any[]).slice(0, 24).map((c: any) => ({
     id: c.id,
     name: c.name,
     job: c.jobs?.[0]?.job ?? c.job ?? "",

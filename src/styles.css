@@ -4,6 +4,14 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@theme {
+  --font-sans: "Inter", "Inter Fallback";
+  --color-brand: oklch(0.68 0.19 12);
+  --color-brand-glow: oklch(0.75 0.17 35);
+  --color-surface: oklch(0.19 0.014 285);
+  --color-surface-2: oklch(0.24 0.016 285);
+}
+
 /*
  * Design system definition.
  *
@@ -63,25 +71,25 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
+  --background: oklch(0.145 0.012 285);
+  --foreground: oklch(0.97 0.005 285);
+  --card: oklch(0.19 0.014 285);
+  --card-foreground: oklch(0.97 0.005 285);
+  --popover: oklch(0.19 0.014 285);
+  --popover-foreground: oklch(0.97 0.005 285);
+  --primary: oklch(0.68 0.19 12);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.26 0.016 285);
+  --secondary-foreground: oklch(0.97 0.005 285);
+  --muted: oklch(0.26 0.016 285);
+  --muted-foreground: oklch(0.7 0.014 285);
+  --accent: oklch(0.75 0.17 35);
+  --accent-foreground: oklch(0.16 0.012 285);
+  --destructive: oklch(0.6 0.23 27);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 14%);
+  --ring: oklch(0.68 0.19 12);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -140,5 +148,87 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: "Inter", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  ::selection {
+    background: var(--color-primary);
+    color: var(--color-primary-foreground);
+  }
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility glass {
+  background: color-mix(in oklab, var(--card) 55%, transparent);
+  backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid color-mix(in oklab, white 8%, transparent);
+}
+
+@utility shimmer {
+  background: linear-gradient(
+    100deg,
+    color-mix(in oklab, var(--card) 90%, transparent) 30%,
+    color-mix(in oklab, white 8%, var(--card)) 50%,
+    color-mix(in oklab, var(--card) 90%, transparent) 70%
+  );
+  background-size: 300% 100%;
+  animation: shimmer-slide 1.4s ease-in-out infinite;
+}
+
+@utility text-gradient {
+  background: linear-gradient(100deg, var(--color-brand), var(--color-brand-glow));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility fade-up {
+  animation: fade-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility zoom-in-soft {
+  animation: zoom-in-soft 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes shimmer-slide {
+  0% {
+    background-position: 180% 0;
+  }
+  100% {
+    background-position: -80% 0;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes zoom-in-soft {
+  from {
+    opacity: 0;
+    transform: scale(1.06);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
